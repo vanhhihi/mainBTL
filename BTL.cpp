@@ -384,6 +384,7 @@ void xoaDV(DanhSachBN& list, DanhSachDV& list2) {
     fgets(confirm, sizeof(confirm), stdin);
     if (confirm[0] == 'y' || confirm[0] == 'Y') {
         system("cls");
+        xoaDV(list2,p);
         printf("\n>>> Da xoa dich vu!\n");
     } else {
         printf("\n>>> Da huy thao tac xoa.\n");
