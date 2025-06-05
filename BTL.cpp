@@ -2,13 +2,11 @@
 
 //===========================================================BACKEND===========================================================
 
-
-
 //===========================================================FRONTEND==========================================================
 void MENU(DanhSachBN& list, DanhSachDV& list2);
 void quanLyBN(DanhSachBN& list, DanhSachDV& list2);
 void quanLyDichVu(DanhSachBN& list, DanhSachDV& list2);
-//===================Quản lý bệnh nhân===================
+//===================Quản lý bệnh nhân===================// Hung lam
 PNode chonDV(DanhSachDV list) {
     system("cls");
     int k;
@@ -326,7 +324,7 @@ void quanLyBN(DanhSachBN& list, DanhSachDV& list2) {
         break;
     }
 }
-//====================Quản lý dịch vụ====================
+//====================Quản lý dịch vụ====================// Vanh lam
 void taoDV(DanhSachBN& list, DanhSachDV& list2) {
     system("cls");
     printf("================= TAO DICH VU =================\n");
@@ -383,12 +381,13 @@ void xoaDV(DanhSachBN& list, DanhSachDV& list2) {
     char confirm[8];
     fgets(confirm, sizeof(confirm), stdin);
     if (confirm[0] == 'y' || confirm[0] == 'Y') {
+        xoaDV(list2,p);
         system("cls");
         printf("\n>>> Da xoa dich vu!\n");
     } else {
         printf("\n>>> Da huy thao tac xoa.\n");
     }
-    sleep_fake(2);
+    sleep_fake(1);
     quanLyDichVu(list, list2);
 }
 void suaDV(DanhSachBN &list, DanhSachDV &list2) {
@@ -396,7 +395,7 @@ void suaDV(DanhSachBN &list, DanhSachDV &list2) {
     printf("================= SUA DICH VU =================\n");
     if (isEmpty(list2)) {
         printf("Danh sach dich vu rong!\n");
-        sleep_fake(2);
+        sleep_fake(1);
         return;
     }
     hienThiDV(list2);
@@ -407,7 +406,7 @@ void suaDV(DanhSachBN &list, DanhSachDV &list2) {
     PNode p = timKiemDV(list2, ma);
     if (!p) {
         printf("Khong tim thay dich vu co ma nay!\n");
-        sleep_fake(2);
+        sleep_fake(1);
         return;
     }
     printf("=== SUA THONG TIN === (bo qua = giu nguyen)\n");
@@ -426,11 +425,11 @@ void suaDV(DanhSachBN &list, DanhSachDV &list2) {
     printf("Gia tien [%.0lf]: ", p->giaTien);
     fgets(buf, sizeof(buf), stdin);
     if (buf[0] != '\n')
-        newGia = atof(buf);
+        newGia = atof(buf);// đổi chuỗi kí tự thành số , trả về double
     suaDV(p, newTen, newGia);
     system("cls");
     printf(">>> Da cap nhat dich vu!\n");
-    sleep_fake(2);
+    sleep_fake(1);
     quanLyDichVu(list, list2);
 }
 void timKiemDV(DanhSachBN &list, DanhSachDV &list2) {
@@ -438,7 +437,7 @@ void timKiemDV(DanhSachBN &list, DanhSachDV &list2) {
     printf("================= TIM KIEM DICH VU =================\n");
     if (isEmpty(list2)) {
         printf("Danh sach dich vu rong!\n");
-        sleep_fake(2);
+        sleep_fake(1);
         return;
     }
     int k;
@@ -535,7 +534,7 @@ void xuatHoaDon(DanhSachBN& list, DanhSachDV& list2) {
     int k;
     system("cls");
     printf("======= HOA DON HIEN TAI =======\n");
-    hienThiHD(list,peekQueueHD(hangDoiHoaDon));
+    hienThiHD(list,peekQueueHD(hangDoiHoaDon));// hóa đơn của bệnh nhân đầu hàng
     printf("================================\n");
     printf("Ban co muon xuat hoa don tren ? ([0] la khong, [1] la co) \n");
     scanf("%d",&k);
@@ -612,11 +611,11 @@ inline int DangNhap() {
 
     if (strcmp(USER, "admin") == 0 && strcmp(PASSWORD, "admin") == 0) {
         printf("DANG NHAP THANH CONG !\n");
-        sleep_fake(2);
+        sleep_fake(1);
         return 1;
     } else {
         printf("TEN DANG NHAP HOAC MAT KHAU SAI !\n");
-        sleep_fake(2);
+        sleep_fake(1);
         return 0;
     }
 }
