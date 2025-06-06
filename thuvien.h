@@ -12,7 +12,6 @@
 #define MAX_SERVICE 100
 #define MAX_USER 100
 #define MAX_PASSWORD 100
-
 //===========================================================BACKEND===========================================================
 //Hàm bổ trợ
 char* layThoiGian() {
@@ -184,7 +183,7 @@ TNode dequeueBN(QueueBN& q) {
     if (q.front == NULL) {
         q.rear = NULL;
     }
-    temp->next = NULL; // tách khỏi hàng đợi
+    temp->next = NULL;
     return temp;
 }
 TNode peekQueue(const QueueBN &q) {
@@ -419,3 +418,4 @@ void hienThiHD(DanhSachBN& list, TNode q) {
     printf("TONG : %lf VND \n", (q->dichVu->giaTien) / ( q->BHYT ? 2.0 : 1.0 ));
 }
 QueueHD hangDoiHoaDon;
+//===========================================================BACKEND===========================================================
