@@ -1,8 +1,5 @@
 #include"thuvien.h"
 
-//===========================================================BACKEND===========================================================
-
-
 
 //===========================================================FRONTEND==========================================================
 void MENU(DanhSachBN& list, DanhSachDV& list2);
@@ -26,7 +23,7 @@ PNode chonDV(DanhSachDV list) {
 
         printf("Nhap sai ma, vui long nhap lai");
         sleep_fake(2);
-        chonDV(list);
+        return chonDV(list);
     }
 }
 void taoBN(DanhSachBN &list, DanhSachDV &list2)
@@ -148,22 +145,24 @@ void suaThongTinBN(DanhSachBN &list, DanhSachDV &list2)
         printf("Danh sach rong!");
         sleep_fake(2);
         quanLyBN(list,list2);
+        return;
     }
     char sdtKey[MAX_PHONE];
+    int ch;
+    while ((ch = getchar()) != '\n' && ch != EOF) {} // clear stdin
     printf("Nhap SDT benh nhan can sua: ");
     fgets(sdtKey, sizeof(sdtKey), stdin);
     sdtKey[strcspn(sdtKey, "\n")] = '\0';
-
     TNode p = timKiemBNSDT(list, sdtKey);
     if (!p) {
         printf("Khong tim thay benh nhan !\n");
         sleep_fake(2);
-        quanLyBN(list,list2);
+        quanLyBN(list, list2);
+        return;
     }
 
     printf("=== SUA THONG TIN === (bo qua = giu nguyen)\n");
     char buf[128];
-
     char newTen[MAX_NAME];      strncpy(newTen, p->tenBenhNhan, MAX_NAME);
     int  newTuoi    = p->tuoiBenhNhan;
     char newSDT[MAX_PHONE];     strncpy(newSDT, p->SDT, MAX_PHONE);
@@ -175,27 +174,21 @@ void suaThongTinBN(DanhSachBN &list, DanhSachDV &list2)
     printf("Ten [%s]: ", p->tenBenhNhan);
     fgets(buf, sizeof(buf), stdin);
     if (buf[0] != '\n') { buf[strcspn(buf, "\n")] = '\0'; strncpy(newTen, buf, MAX_NAME); }
-
     printf("Tuoi [%d]: ", p->tuoiBenhNhan);
     fgets(buf, sizeof(buf), stdin);
-    if (buf[0] != '\n')   newTuoi = atoi(buf);
-
+    if (buf[0] != '\n')   newTuoi = atoi(buf);// chuyểnn chuỗi thành số nguyên
     printf("SDT [%s]: ", p->SDT);
     fgets(buf, sizeof(buf), stdin);
-    if (buf[0] != '\n') { buf[strcspn(buf, "\n")] = '\0'; strncpy(newSDT, buf, MAX_PHONE); }
-
+    if (buf[0] != '\n') { buf[strcspn(buf, "\n")] = '\0'; strncpy(newSDT, buf, MAX_PHONE); newSDT[MAX_PHONE-1] = '\0';}
     printf("CCCD [%s]: ", p->CCCD);
     fgets(buf, sizeof(buf), stdin);
     if (buf[0] != '\n') { buf[strcspn(buf, "\n")] = '\0'; strncpy(newCCCD, buf, MAX_CCCD); }
-
     printf("Tinh trang [%s]: ", p->tinhTrangBenh);
     fgets(buf, sizeof(buf), stdin);
     if (buf[0] != '\n') { buf[strcspn(buf, "\n")] = '\0'; strncpy(newTinhTrang, buf, MAX_NAME); }
-
     printf("BHYT (1/0) [%d]: ", p->BHYT);
     fgets(buf, sizeof(buf), stdin);
     if (buf[0] != '\n')   newBHYT = atoi(buf);
-
     printf("Muon doi dich vu? (y/n): ");
     fgets(buf, sizeof(buf), stdin);
     if (buf[0] == 'y' || buf[0] == 'Y')
@@ -211,11 +204,11 @@ void suaThongTinBN(DanhSachBN &list, DanhSachDV &list2)
           p->lichKham,
           newBHYT,
           newDV);
-
     system("cls");
     printf(">>> Da cap nhat.\n");
     sleep_fake(2);
 }
+
 void timKiemBN(DanhSachBN &list, DanhSachDV &list2) {
     system("cls");
     printf("================= TIM KIEM BENH NHAN =================\n");
@@ -235,6 +228,7 @@ void timKiemBN(DanhSachBN &list, DanhSachDV &list2) {
             printf("Nhap ten benh nhan can tim kiem: ");
             fgets(name, sizeof(name), stdin);
             name[strcspn(name, "\n")] = '\0';
+            getchar();
             printf("===========================================\n ");
             printf("Danh sach benh nhan can tim: \n");
             hienThiMotBN(list, timKiemBNTen(list,name));
@@ -249,9 +243,9 @@ void timKiemBN(DanhSachBN &list, DanhSachDV &list2) {
             char sdt[MAX_PHONE];
             printf("Nhap SDT benh nhan can tim kiem: ");
             fgets(sdt, sizeof(sdt), stdin);
-            name[strcspn(sdt, "\n")] = '\0';
+            sdt[strcspn(sdt, "\n")] = '\0';
             printf("===========================================\n ");
-            printf("Danh sach benh nhan can tim: ");
+            printf("Danh sach benh nhan can tim: \n");
             hienThiMotBN(list, timKiemBNSDT(list,sdt));
             printf("===========================================\n ");
             printf("Go bat ky nut nao de quay lai : ");
@@ -384,7 +378,6 @@ void xoaDV(DanhSachBN& list, DanhSachDV& list2) {
     fgets(confirm, sizeof(confirm), stdin);
     if (confirm[0] == 'y' || confirm[0] == 'Y') {
         system("cls");
-        xoaDV(list2,p);
         printf("\n>>> Da xoa dich vu!\n");
     } else {
         printf("\n>>> Da huy thao tac xoa.\n");
